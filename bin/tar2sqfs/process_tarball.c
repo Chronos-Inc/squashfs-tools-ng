@@ -18,6 +18,9 @@ static int write_file(istream_t *input_file, sqfs_writer_t *sqfs,
 
 	if (no_tail_pack && filesize > cfg.block_size)
 		flags |= SQFS_BLK_DONT_FRAGMENT;
+	
+	if (strcmp("zImage", hdr->name) == 0)
+		flags |= SQFS_BLK_DONT_COMPRESS;
 
 	out = data_writer_ostream_create(hdr->name, sqfs->data, &fi->inode,
 					 flags);
